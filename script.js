@@ -124,7 +124,7 @@
         scene.add(ambientLight);
 
         axesHelper = new THREE.AxesHelper(5.0);
-        scene.add(axesHelper);
+        // scene.add(axesHelper);
 
         window.addEventListener('keydown', (eve) => {
             run = eve.key !== 'Escape';
