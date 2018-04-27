@@ -58,10 +58,23 @@
             // ちょっと面倒に感じるかもしれませんが、覚えておきましょう。
             // ----------------------------------------------------------------
         };
-        const MATERIAL_PARAM = {
-            color: 0x579BBC,   // マテリアルの持つ色
-            specular: 0xffffff // スペキュラ（反射光）の持つ色
-        };
+        // const MATERIAL_PARAM = {
+        //     color: 0x579BBC,   // マテリアルの持つ色
+        //     specular: 0xffffff // スペキュラ（反射光）の持つ色
+        // };
+				const MATERIAL_PARAM_RED = {
+						// color: 0xdc143c,   // マテリアルの持つ色
+						color: 0xb30000,   // マテリアルの持つ色
+						specular: 0xffffff // スペキュラ（反射光）の持つ色
+				};
+				const MATERIAL_PARAM_DARK_RED = {
+						color: 0x800000,   // マテリアルの持つ色
+						specular: 0xffffff // スペキュラ（反射光）の持つ色
+				};
+				const MATERIAL_PARAM_BLACK = {
+						color: 0x220000,   // マテリアルの持つ色
+						specular: 0xffffff // スペキュラ（反射光）の持つ色
+				};
 
         const DIRECTIONAL_LIGHT_PARAM = {
             color: 0xffffff, // ディレクショナルライトの持つ色
@@ -95,13 +108,27 @@
 
         controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-        material = new THREE.MeshPhongMaterial(MATERIAL_PARAM);
+        let materialRed = new THREE.MeshPhongMaterial(MATERIAL_PARAM_RED);
+        let materialDarkRed = new THREE.MeshPhongMaterial(MATERIAL_PARAM_DARK_RED);
+        let materialBlack = new THREE.MeshPhongMaterial(MATERIAL_PARAM_BLACK);
 
         // ボックスジオメトリの生成とメッシュ化
 				// cubeを作成
         geometry = new THREE.BoxGeometry(1.0, 1.0, 1.0);
 				for (let count = 0; count < 100 ; count++ ) {
-	        cubes[count] = new THREE.Mesh(geometry, material);
+					let tmpMaterial;
+					if ((Math.floor(count/10)) % 2 == 1 ) {
+
+						tmpMaterial = count % 2 == 1 ? materialRed: materialDarkRed;
+
+
+					} else {
+
+						tmpMaterial = count % 2 == 1 ? materialDarkRed: materialBlack;
+
+					}
+
+	        cubes[count] = new THREE.Mesh(geometry, tmpMaterial);
 	        cubes[count].position.x = -4.5 + count % 10;
 	        cubes[count].position.y = -4.5 + Math.floor(count/10);
 					cubes[count].rotation.y = 0.002 * count;
